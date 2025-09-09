@@ -37,6 +37,20 @@ func TestBaseApi(t *testing.T) {
 		assertContentType(t, response, jsonContentType)
 	})
 }
+func TestResumeEndpoint(t *testing.T) {
+	server := NewServer(context.Background())
+	t.Run("/api/v1/resume", func(t *testing.T) {
+		request := newGetResumeRequest()
+		response := httptest.NewRecorder()
+		server.ServeHTTP(response, request)
+		assertStatus(t, response.Code, http.StatusOK)
+	})
+}
+
+func newGetResumeRequest() *http.Request {
+	request, _ := http.NewRequest(http.MethodGet, "/api/v1/resume", nil)
+	return request
+}
 
 func newGetBaseApiRequest() *http.Request {
 	request, _ := http.NewRequest(http.MethodGet, "/api/v1", nil)
