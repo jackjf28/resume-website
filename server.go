@@ -9,10 +9,11 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	_ "github.com/joho/godotenv/autoload"
 )
 
 const jsonContentType string = "application/json"
-const bearerToken string = ""
 
 type Server struct {
 	http.Handler
@@ -73,7 +74,7 @@ func handleGetResume() http.Handler {
 		req, _ := http.NewRequestWithContext(ctx, http.MethodGet, "https://api.github.com/repos/jackjf28/resume/contents/jack_farrell_resume.pdf", nil)
 
 		req.Header.Add("Accept", "application/vnd.github.object")
-		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", bearerToken))
+		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("PAT")))
 		req.Header.Add("X-GitHub-Api-Version", "2022-11-28")
 
 		resp, err := client.Do(req)
