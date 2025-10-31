@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jackjf28/resume-website"
+	"github.com/jackjf28/resume-website/server"
 )
 
 func run(ctx context.Context, w io.Writer, args []string) error {
@@ -23,11 +23,11 @@ func run(ctx context.Context, w io.Writer, args []string) error {
 	s := server.NewServer(ctx)
 
 	httpServer := &http.Server{
-		Addr:    ":8080",
+		Addr:    ":4000",
 		Handler: s,
 	}
 
-	fmt.Fprintf(w, "listening on :8080.\n")
+	fmt.Fprintf(w, fmt.Sprintf("listening on %s.\n", httpServer.Addr))
 	go func() {
 		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			fmt.Fprintf(w, "error listening on server: %v\n", err)
