@@ -14,11 +14,11 @@ test:
 
 .PHONY: tailwind-watch
 tailwind-watch:
-	tailwindcss -i ./static/css/input.css -o ./static/css/style.css --watch
+	npx @tailwindcss/cli -i ./static/css/input.css -o ./static/css/style.css --watch=always
 
 .PHONY: tailwind-build
 tailwind-build:
-	tailwindcss -i ./static/css/input.css -o ./static/css/style.min.css --minify
+	npx @tailwindcss/cli -i ./static/css/input.css -o ./static/css/style.min.css --minify
 
 .PHONY: templ-watch
 templ-watch:
@@ -66,3 +66,7 @@ docker-rebuild:
 	docker compose -f ./dev/docker-compose.yml down
 	docker compose -f ./dev/docker-compose.yml build --no-cache
 	docker compose -f ./dev/docker-compose.yml -f ./dev/docker-compose.dev.yml up
+
+.PHONY: docker-tailwind-rebuild
+docker-tailwind-rebuid:
+	docker compose -f ./dev/docker-compose.yml -f ./dev/docker-compose.dev.yml exec app npx @tailwindcss/cli -i ./static/css/input.css -o ./static/css/style.css

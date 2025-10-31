@@ -56,15 +56,12 @@ func CSPMiddleware(next http.Handler) http.Handler {
 
 func TextHTMLMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        fmt.Printf("Request: %s, Content-Type before: %s\n", r.URL.Path, w.Header().Get("Content-Type"))
 		if strings.HasPrefix(r.URL.Path, "/static/") {
 			next.ServeHTTP(w, r)
-			fmt.Printf("STATIC - Request: %s, Content-Type AFTER next.ServeHTTP: %s\n", r.URL.Path, w.Header().Get("Content-Type"))
 			return
 		}    
 
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-        fmt.Printf("Request: %s, Content-Type after: %s\n", r.URL.Path, w.Header().Get("Content-Type"))
 		next.ServeHTTP(w, r)
 	})
 }

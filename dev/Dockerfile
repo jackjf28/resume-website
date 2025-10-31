@@ -1,15 +1,15 @@
-FROM golang:1.25-alpine
+FROM golang:1.25-bookworm
 WORKDIR /app
 
-RUN apk add --no-cache make gcc g++ curl
+RUN apt-get update && \
+    apt-get install -y curl nodejs npm && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN go install github.com/a-h/templ/cmd/templ@latest && \
     go install github.com/air-verse/air@latest
 
-#RUN npm install -g tailwindcss@v3
-RUN curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64 && \
-    chmod +x tailwindcss-linux-x64 && \
-    mv tailwindcss-linux-x64 /usr/local/bin/tailwindcss
+COPY package*.json ./
+RUN npm install
 
 # dependency caching
 COPY go.mod go.sum ./
