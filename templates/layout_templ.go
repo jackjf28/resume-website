@@ -172,7 +172,7 @@ func footer() templ.Component {
 			templ_7745c5c3_Var8 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<footer class=\"bg-gray-500 hover:bg-green-300 p-4\"><p>© 2025 Jack Farrell </p></footer>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<footer class=\"bg-gray-500 hover:bg-green-600 p-4\"><p>© 2025 Jack Farrell </p></footer>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
