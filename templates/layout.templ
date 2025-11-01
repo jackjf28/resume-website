@@ -21,29 +21,33 @@ templ header(title string) {
 }
 
 templ nav() {
-	<nav>
-		<div>
-			<ol class="flex flex-col">
-				<li>
-					<a href="/home">About</a>
-				</li>
-				<li>
-					<a href="/resume">Resume</a>
-				</li>
-			</ol>
+	<nav
+		class="relative bg-gray-800 dark:bg-gray-800/50 dark:after:pointer-events-none dark:after:absolute dark:after:inset-x-0 dark:after:bottom-0 dark:after:h-px dark:after:bg-white/10"
+	>
+		<div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+			<div class="relative flex h-16 items-center justify-between">
+				<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+					<div class="hidden sm:block">
+						<div class="flex space-x-4">
+							<a href="/home" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Home</a>
+							<a href="/resume" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Resume</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</nav>
 }
 
 templ footer() {
-	<footer class="bg-gray-500 hover:bg-green-600 p-4">
+	<footer class="bg-gray-500 hover:bg-blue-600 p-4">
 		<p>© 2025 Jack Farrell </p>
 	</footer>
 }
 
 templ Layout(contents templ.Component, title string) {
 	@header(title)
-	<body class="flex flex-col h-full">
+	<body class="flex flex-col h-full bg-gray-100 dark:bg-gray-900">
 		@nav()
 		<main class="flex-1 container ">
 			@contents
