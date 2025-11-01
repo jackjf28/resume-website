@@ -22,6 +22,7 @@
     --color-gray-700: oklch(37.3% 0.034 259.733);
     --color-gray-800: oklch(27.8% 0.033 256.848);
     --color-gray-900: oklch(21% 0.034 264.665);
+    --color-gray-950: oklch(13% 0.028 261.692);
     --color-white: #fff;
     --spacing: 0.25rem;
     --container-7xl: 80rem;
@@ -192,6 +193,15 @@
   .static {
     position: static;
   }
+  .sticky {
+    position: sticky;
+  }
+  .top-0 {
+    top: calc(var(--spacing) * 0);
+  }
+  .z-10 {
+    z-index: 10;
+  }
   .container {
     width: 100%;
     @media (width >= 40rem) {
@@ -228,8 +238,20 @@
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
+  .h-\[200vh\] {
+    height: 200vh;
+  }
+  .h-\[220vh\] {
+    height: 220vh;
+  }
   .h-full {
     height: 100%;
+  }
+  .h-screen {
+    height: 100vh;
+  }
+  .min-h-screen {
+    min-height: 100vh;
   }
   .w-22 {
     width: calc(var(--spacing) * 22);
@@ -304,6 +326,9 @@
   .bg-gray-800 {
     background-color: var(--color-gray-800);
   }
+  .bg-gray-900 {
+    background-color: var(--color-gray-900);
+  }
   .bg-green-700 {
     background-color: var(--color-green-700);
   }
@@ -341,6 +366,9 @@
   }
   .text-gray-300 {
     color: var(--color-gray-300);
+  }
+  .text-white {
+    color: var(--color-white);
   }
   .underline {
     text-decoration-line: underline;
@@ -455,6 +483,14 @@
       padding-inline: calc(var(--spacing) * 8);
     }
   }
+  .dark\:bg-gray-800\/25 {
+    @media (prefers-color-scheme: dark) {
+      background-color: color-mix(in srgb, oklch(27.8% 0.033 256.848) 25%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-gray-800) 25%, transparent);
+      }
+    }
+  }
   .dark\:bg-gray-800\/50 {
     @media (prefers-color-scheme: dark) {
       background-color: color-mix(in srgb, oklch(27.8% 0.033 256.848) 50%, transparent);
@@ -463,9 +499,25 @@
       }
     }
   }
+  .dark\:bg-gray-800\/75 {
+    @media (prefers-color-scheme: dark) {
+      background-color: color-mix(in srgb, oklch(27.8% 0.033 256.848) 75%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-gray-800) 75%, transparent);
+      }
+    }
+  }
   .dark\:bg-gray-900 {
     @media (prefers-color-scheme: dark) {
       background-color: var(--color-gray-900);
+    }
+  }
+  .dark\:bg-gray-950\/75 {
+    @media (prefers-color-scheme: dark) {
+      background-color: color-mix(in srgb, oklch(13% 0.028 261.692) 75%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-gray-950) 75%, transparent);
+      }
     }
   }
   .dark\:after\:pointer-events-none {

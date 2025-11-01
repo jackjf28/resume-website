@@ -17,6 +17,7 @@ type Server struct {
 	http.Handler
 	ctx context.Context
 	resumeHandler *handlers.ResumeHandler
+	getResumeHandler *handlers.GetResumeHandler
 	homeHandler *handlers.HomeHandler
 }
 
@@ -27,10 +28,12 @@ func NewServer(context context.Context) http.Handler {
 	resumeHandler := handlers.NewResumeHandler(resumeService)
 
 	homeHandler := handlers.NewHomeHandler()
+	getResumeHandler := handlers.NewGetResumeHandler()
 
 	p := &Server{
 		ctx: context,
 		resumeHandler: resumeHandler,
+		getResumeHandler: getResumeHandler,
 		homeHandler: homeHandler,
 	}
 	mux := http.NewServeMux()
@@ -50,6 +53,7 @@ func (s *Server) AddRoutes(mux *http.ServeMux) {
 
 	mux.Handle("/", http.NotFoundHandler())
 	mux.Handle("/home", s.homeHandler.GetHomePage())
+	mux.Handle("/resume", s.getResumeHandler.GetResumePage())
 	mux.Handle("/api/v1", http.NotFoundHandler())
 	mux.Handle("/api/v1/resume", s.resumeHandler.GetResume())
 }
