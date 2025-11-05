@@ -22,9 +22,9 @@ templ header(title string) {
 
 templ nav(currentPath string) {
 	<nav
-		class="sticky top-0 bg-gray-800 dark:bg-gray-800/75 dark:after:pointer-events-none dark:after:absolute dark:after:inset-x-0 dark:after:bottom-0 dark:after:h-px dark:after:bg-white/10 z-10"
+		class="fixed top-0 inset-x-0 bg-gray-800 dark:bg-gray-800/75 dark:after:pointer-events-none dark:after:absolute dark:after:inset-x-0 dark:after:bottom-0 dark:after:h-px dark:after:bg-white/10 z-10"
 	>
-		<div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+		<div class="max-w-7xl px-2 sm:px-6 lg:px-8">
 			<div class="relative flex h-16 items-center justify-between">
 				<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 					<div class="hidden sm:block">
@@ -63,7 +63,7 @@ templ Layout(contents templ.Component, title string, currentPath string) {
 	@header(title)
 	<body class="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
 		@nav(currentPath)
-		<main class="flex-1 container h-[200vh] text-sm font-medium text-gray-300">
+		<main class="flex-1 container mt-16">
 			@contents
 		</main>
 		@footer()
