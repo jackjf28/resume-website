@@ -11,7 +11,8 @@ templ header(title string) {
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<script src="/static/script/htmx.min.js" nonce={ middleware.GetHtmxNonce(ctx) }></script>
-		<script src="/static/script/response-targets.js" nonce={ middleware.GetResponseTargetsNonce(ctx) }></script>
+		<script defer src="/static/script/alpine.min.js" nonce={ middleware.GetAlpineNonce(ctx) }></script>
+		//<script src="/static/script/response-targets.js" nonce={ middleware.GetResponseTargetsNonce(ctx) }></script>
 		if os.Getenv("env") == "production" {
 			<link rel="stylesheet" href="/static/css/style.min.css" nonce={ middleware.GetTwNonce(ctx) }/>
 		} else {
@@ -22,7 +23,7 @@ templ header(title string) {
 
 templ nav(currentPath string) {
 	<nav
-		class="fixed top-0 inset-x-0 bg-gray-800 dark:bg-gray-800/75 dark:after:pointer-events-none dark:after:absolute dark:after:inset-x-0 dark:after:bottom-0 dark:after:h-px dark:after:bg-white/10 z-10"
+		class="relative bg-gray-800 dark:bg-gray-800/75 dark:after:pointer-events-none dark:after:absolute dark:after:inset-x-0 dark:after:bottom-0 dark:after:h-px dark:after:bg-white/10 z-10"
 	>
 		<div class="max-w-7xl px-2 sm:px-6 lg:px-8">
 			<div class="relative flex h-16 items-center justify-between">
@@ -36,13 +37,6 @@ templ nav(currentPath string) {
 								templ.KV("text-gray-300 hover:bg-white/5 hover:text-white", currentPath != "/home")
 								}
 							>Home</a>
-							<a
-								href="/resume"
-								class={"rounded-md px-3 py-2 text-sm font-medium",
-								templ.KV("bg-gray-900 dark:bg-gray-950/75 text-white", currentPath == "/resume"),
-								templ.KV("text-gray-300 hover:bg-white/5 hover:text-white", currentPath != "/resume")
-								}
-							>Resume</a>
 						</div>
 					</div>
 				</div>
@@ -63,7 +57,7 @@ templ Layout(contents templ.Component, title string, currentPath string) {
 	@header(title)
 	<body class="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
 		@nav(currentPath)
-		<main class="flex-1 container mt-16">
+		<main class="flex-1 container">
 			@contents
 		</main>
 		@footer()

@@ -29,7 +29,7 @@ func Resume() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"text-gray-300 m-8\"><embed src=\"/api/v1/resume\" type=\"application/pdf\" class=\"w-full h-screen\"></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div x-data=\"{ open: true }\" x-show=\"open\" class=\"fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50\" id=\"pdf-modal\"><div @click.outside=\"open = false\" class=\"bg-white rounded-lg w-11/12 h-5/6 flex flex-col\"><!-- Header --><div class=\"flex justify-between itemx-center p-4 border-b\"><h2 class=\"text-xl font-semibold\">Resume</h2><button @click=\"open = false\" class=\"text-gray-500 hover:text-gray-700\">x</button></div><!-- PDF iframe --><iframe src=\"/api/v1/resume\" class=\"w-full flex-1\" referrerpolicy=\"origin\"></iframe></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
