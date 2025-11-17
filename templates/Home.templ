@@ -2,15 +2,17 @@ package templates
 
 templ Home(name string) {
 	<div id="home" class="text-gray-300">
-		<h1 id="header" class="p-4 text-4xl font-medium">
-		Hey
-		</h1>
-		<button 
-			hx-get="/resume" 
-			hx-target="#modal-container"
-			type="button" 
-			class="ml-4 p-2 dark:bg-gray-600 hover:bg-gray-500 rounded-xl"
+		<span class="flex justify-center mt-4">
+			<button
+				hx-get="/resume"
+				hx-target="#modal-container"
+				type="button"
+				class="ml-4 p-2 dark:bg-gray-600 hover:bg-gray-500 rounded-xl"
 			>Resume</button>
+		</span>
+		<h1 id="header" class="p-4 text-4xl font-medium">
+			Hey
+		</h1>
 		<div id="modal-container"></div>
 	</div>
 }
