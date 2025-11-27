@@ -40,9 +40,11 @@ func NewServer(context context.Context) http.Handler {
 
 
 	p.AddRoutes(mux)
-	p.Handler = middleware.TextHTMLMiddleware(
-		middleware.CSPMiddleware(mux),
-	)
+	p.Handler = middleware.LoggingMiddleware(
+		middleware.TextHTMLMiddleware(
+			middleware.CSPMiddleware(mux),
+			),
+		)
 	return p
 }
 

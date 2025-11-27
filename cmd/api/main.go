@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
@@ -17,6 +18,11 @@ func run(ctx context.Context, w io.Writer, args []string) error {
 	if len(args) > 1 {
 		fmt.Fprintf(w, "%s\n", strings.Join(args, ","))
 	}
+
+	//Logging
+	logger := slog.New(slog.NewTextHandler(w, nil))
+	slog.SetDefault(logger)
+
 	ctx, cancel := signal.NotifyContext(ctx, os.Interrupt)
 	defer cancel()
 
