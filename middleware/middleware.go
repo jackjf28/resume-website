@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"log"
+	"log/slog"
 	"net/http"
 	"strings"
 )
@@ -109,4 +110,44 @@ func GetTwNonce(ctx context.Context) string {
 func GetHtmxCSSHashNonce(ctx context.Context) string {
 	nonceSet := GetNonces(ctx)
 	return nonceSet.HtmxCSSHash
+}
+
+type loggingResponseWriter struct {
+	http.ResponseWriter
+	statusCode int
+	bytesWritten int
+}
+
+func (rw *loggingResponseWriter) WriteHeader(code int) {
+	rw.statusCode = code
+	rw.ResponseWriter.WriteHeader(code)
+}
+
+func (rw *loggingResponseWriter) Write(b []byte) (int, error) {
+	n, err := rw.ResponseWriter.Write(b)
+	rw.bytesWritten += n
+	return n, err
+}
+
+func LoggingMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request)  {
+		rw := &loggingResponseWriter{
+			ResponseWriter: w,
+			statusCode: http.StatusOK,
+		}
+
+		slog.Info("incoming request", 
+			"method", r.Method,
+			"path", r.URL.Path,
+			"remote_addr", r.RemoteAddr)
+
+		next.ServeHTTP(rw, r)
+
+		slog.Info("response sent", 
+			"method", r.Method,
+			"path", r.URL.Path,
+			"status", rw.statusCode,
+			"bytes", rw.bytesWritten,
+			"content_type", rw.Header().Get("Content-Type"))
+	})
 }
