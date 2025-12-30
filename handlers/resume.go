@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log/slog"
 	"net/http"
 
 	"github.com/jackjf28/resume-website/services"
@@ -27,6 +28,7 @@ func (h *ResumeHandler) GetResume() http.Handler {
 		pdfData, err := h.resumeService.GetResumePDF(ctx)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("failed to fetch resume: %v", err), http.StatusInternalServerError)
+			slog.Error("error occurred when retreiving resume", err)
 			return
 		}
 

@@ -11,7 +11,7 @@ const jsonContentType = "application/json"
 const pdfContentType = "application/pdf"
 
 func TestRootEndpoint(t *testing.T) {
-	t.Run("/ returns 404 not found", func(t *testing.T) {
+	t.Run("'/' returns 404", func(t *testing.T) {
 		server := NewServer(context.Background())
 		request, _ := http.NewRequest(http.MethodGet, "/", nil)
 		response := httptest.NewRecorder()
@@ -23,26 +23,17 @@ func TestRootEndpoint(t *testing.T) {
 
 func TestBaseApi(t *testing.T) {
 	server := NewServer(context.Background())
-	t.Run("/api/v1 returns 200", func(t *testing.T) {
+	t.Run("'/api/v1' returns 404", func(t *testing.T) {
 		request := newGetBaseAPIRequest()
 		response := httptest.NewRecorder()
 		server.ServeHTTP(response, request)
 
-		assertStatus(t, response.Code, http.StatusOK)
-	})
-	t.Run("/api/v1 returns json when called", func(t *testing.T) {
-		request := newGetBaseAPIRequest()
-		response := httptest.NewRecorder()
-		server.ServeHTTP(response, request)
-
-		assertStatus(t, response.Code, http.StatusOK)
-
-		assertContentType(t, response, jsonContentType)
+		assertStatus(t, response.Code, http.StatusNotFound)
 	})
 }
 func TestResumeEndpoint(t *testing.T) {
 	server := NewServer(context.Background())
-	t.Run("/api/v1/resume", func(t *testing.T) {
+	t.Run("/api/v1/resume returns 200", func(t *testing.T) {
 		request := newGetResumeRequest()
 		response := httptest.NewRecorder()
 		server.ServeHTTP(response, request)

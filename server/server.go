@@ -60,7 +60,6 @@ func (s *Server) AddRoutes(mux *http.ServeMux) {
 	mux.Handle("/api/v1/resume", s.resumeHandler.GetResume())
 }
 
-
 //func handleBaseAPI() http.Handler {
 //	type baseResponse struct {
 //		Message string `json:"message"`
