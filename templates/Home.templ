@@ -6,5 +6,9 @@ templ Home(name string) {
 			Welcome to my website!
 		</h1>
 		<div id="modal-container"></div>
+		<div
+			hx-get="/projects"
+			hx-trigger="load"
+		></div>
 	</div>
 }

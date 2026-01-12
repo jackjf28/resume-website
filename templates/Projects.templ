@@ -1,0 +1,23 @@
+package templates
+
+import (
+ "fmt"
+)
+
+type Project struct {
+	Name string
+	Description string
+}
+
+templ Projects(projects []Project) {
+	<div id="projects" class="flex flex-col">
+		for i, project := range projects {
+			<div id={fmt.Sprintf("project-%v", i)} class="p-4">
+				<h2 class="mb-2 text-2xl font-light">
+					{project.Name}
+				</h2>
+				<p>{project.Description}</p>
+			</div>
+		}
+	</div>
+}

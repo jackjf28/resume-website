@@ -13,7 +13,7 @@ func NewHomeHandler() *HomeHandler {
 	return &HomeHandler{}
 }
 
-func (h *HomeHandler) GetHomePage() http.Handler {
+func (h *HomeHandler) GetHandler() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		slog.Info("get home page request")
 		name := "jack"

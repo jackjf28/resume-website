@@ -38,7 +38,7 @@ func NewClient(token string) *Client {
 	}
 }
 
-func (c *Client) GetFileContent(ctx context.Context, owner, repo, path string) (*FileContent, error) {
+func (c *Client) getFileContent(ctx context.Context, owner, repo, path string) (*FileContent, error) {
 	url := fmt.Sprintf("%s/repos/%s/%s/contents/%s", c.baseURL, owner, repo, path)
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
@@ -66,7 +66,7 @@ func (c *Client) GetFileContent(ctx context.Context, owner, repo, path string) (
 }
 
 func (c *Client) GetPDFBytes(ctx context.Context, owner, repo, path string) ([]byte, error) {
-	fileContent, err := c.GetFileContent(ctx, owner, repo, path)
+	fileContent, err := c.getFileContent(ctx, owner, repo, path)
 	if err != nil {
 		return nil, err
 	}

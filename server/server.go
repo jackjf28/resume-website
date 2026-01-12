@@ -7,18 +7,23 @@ import (
 
 	"github.com/jackjf28/resume-website/github"
 	"github.com/jackjf28/resume-website/handlers"
+	"github.com/jackjf28/resume-website/interfaces"
 	"github.com/jackjf28/resume-website/middleware"
 	"github.com/jackjf28/resume-website/services"
 
 	_ "github.com/joho/godotenv/autoload"
 )
 
+type RouteConfig struct {
+	Path string
+	Handler interfaces.TemplateHandler
+}
+
 type Server struct {
 	http.Handler
 	ctx context.Context
 	resumeHandler *handlers.ResumeHandler
-	getResumeHandler *handlers.GetResumeHandler
-	homeHandler *handlers.HomeHandler
+	routes []RouteConfig
 }
 
 func NewServer(context context.Context) http.Handler {
@@ -27,14 +32,14 @@ func NewServer(context context.Context) http.Handler {
 	resumeService := services.NewResumeService(githubClient)
 	resumeHandler := handlers.NewResumeHandler(resumeService)
 
-	homeHandler := handlers.NewHomeHandler()
-	getResumeHandler := handlers.NewGetResumeHandler()
-
 	p := &Server{
 		ctx: context,
 		resumeHandler: resumeHandler,
-		getResumeHandler: getResumeHandler,
-		homeHandler: homeHandler,
+		routes: []RouteConfig {
+			{Path: "/home", Handler: handlers.NewHomeHandler()},
+			{Path: "/resume", Handler: handlers.NewGetResumeHandler()},
+			{Path: "/projects", Handler: handlers.NewProjectHandler()},
+		},
 	}
 	mux := http.NewServeMux()
 
@@ -54,10 +59,13 @@ func (s *Server) AddRoutes(mux *http.ServeMux) {
 	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	mux.Handle("/", http.NotFoundHandler())
-	mux.Handle("/home", s.homeHandler.GetHomePage())
-	mux.Handle("/resume", s.getResumeHandler.GetResumePage())
 	mux.Handle("/api/v1", http.NotFoundHandler())
+
 	mux.Handle("/api/v1/resume", s.resumeHandler.GetResume())
+
+	for _, route := range s.routes {
+		mux.Handle(route.Path, route.Handler.GetHandler())
+	}
 }
 
 //func handleBaseAPI() http.Handler {

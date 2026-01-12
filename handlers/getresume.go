@@ -12,7 +12,7 @@ func NewGetResumeHandler() *GetResumeHandler {
 	return &GetResumeHandler{}
 }
 
-func (h *GetResumeHandler) GetResumePage() http.Handler {
+func (h *GetResumeHandler) GetHandler() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		c := templates.Resume()
 		err := c.Render(r.Context(), w)
